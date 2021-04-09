@@ -1,0 +1,40 @@
+﻿@model MovieSearchViewModel
+
+
+<link rel="stylesheet" href="~/css/CardHoverAnimation.css" />
+
+@{
+    ViewData["Title"] = "MovieSearch";
+}
+
+<br />
+<div class="m-lg-5">
+    <div class="text-center">
+        <a asp-action="MovieSearch"
+           asp-route-searchQuery="@Model.Query"
+           asp-route-page="@Model.PrevIndex"
+           class="btn btn-info btn-lg @Model.PrevPageDisabled">Prev</a>
+
+        <a asp-action="MovieSearch"
+           asp-route-searchQuery="@Model.Query"
+           asp-route-page="@Model.NextIndex"
+           class="btn btn-info btn-lg @Model.NextPageDisabled">Next</a>
+    </div>
+
+    <div class="row">
+        <partial name="_GenericMovieList" model="Model.MovieResponse" />
+    </div>
+
+
+    <div class="text-center">
+        <a asp-action="MovieSearch"
+           asp-route-searchQuery="@Model.Query"
+           asp-route-page="@Model.PrevIndex"
+           class="btn btn-info btn-lg @Model.PrevPageDisabled">Prev</a>
+
+        <a asp-action="MovieSearch"
+           asp-route-searchQuery="@Model.Query"
+           asp-route-page="@Model.NextIndex"
+           class="btn btn-info btn-lg @Model.NextPageDisabled">Next</a>
+    </div>
+</div>

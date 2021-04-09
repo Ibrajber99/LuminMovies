@@ -1,0 +1,13 @@
+﻿@model MoviesDataBase.Models.Models.Movie_related_models.MovieReview
+
+
+<div class="card text-white bg-dark mb-3">
+    <p class="card-header text-info display-4 bg-dark">@Model.AuthorName</p>
+    <div class="card-body">
+        <p class="card-text">@Model.Content</p>
+    </div>
+    <div class="card-footer">
+        <p>Created on : @Model.ReviewedCreatedOn</p>
+        <p>Updated on: @Model.ReviewedUpdatedOn</p>
+    </div>
+</div>

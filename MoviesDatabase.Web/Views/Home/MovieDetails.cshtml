@@ -1,0 +1,162 @@
+﻿@model MovieDetailsViewModel
+
+
+<link href="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" type="text/css">
+
+<br />
+<br />
+<div class="row m-5">
+    <div class="col-lg-3 col-sm-12 col-md-12">
+        <div class="card text-white bg-dark mb-3">
+            <div class="row m-2">
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    <p class="card-text">
+                        <i class="fas fa-calendar-alt">
+                        </i>  @Model.Result.Movie.ReleaseDate
+                    </p>
+                </div>
+
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    <p class="card-text">
+                        <i class="fas fa-star"></i>
+                        @Model.Result.Movie.VoteAverage / 10
+                    </p>
+                </div>
+
+                <div class="col-lg-4 col-sm-12 col-md-12">
+
+                    <p class="card-text">
+                        <i class="fas fa-ruler-vertical"></i>
+                        @Model.Result.Movie.MovieLength minutes
+                    </p>
+                </div>
+            </div>
+            <div class="row m-2">
+                @foreach (var genre in Model.Result.Movie.Genres)
+                {
+                    <div class="col-lg-4 col-sm-12 col-md-12">
+                        <p class="card-text">@genre.Name</p>
+                    </div>
+                }
+
+            </div>
+            <img class="card-img-bottom" src="@Model.Result.Movie.PosterPath" alt="@Model.Result.Movie.MovieTitle">
+            <div class="card-footer">
+                <p class="text-info">Revenue: @Model.Result.Movie.Revenue</p>
+                <p class="text-info">Budget: @Model.Result.Movie.Budget</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-auto col-md-auto">
+        <div class="card text-white bg-dark mb-3">
+            <p class="card-header text-info display-4 bg-dark">@Model.Result.Movie.MovieTitle </p>
+            <p class="card-header text-light bg-dark">@Model.Result.Movie.MovieTagline</p>
+            <p class="m-2">@Model.Result.Movie.Overview</p>
+            <div class="card-body">
+                <p>
+                    <a class="btn btn-outline-info btn-block text-left" data-toggle="collapse"
+                       href="#collapseVideos" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Trailers
+                    </a>
+                </p>
+
+                <div class="collapse" id="collapseVideos">
+                    @foreach (var trailer in Model.Videos.Results)
+                    {
+                        <iframe class="embed-responsive-item" width="620" height="450"
+                                src="@trailer.Key">
+                        </iframe>
+                    }
+                </div>
+
+                <p>
+                    <a class="btn btn-outline-warning btn-block text-left" data-toggle="collapse"
+                       href="#collapseReviews" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Users reviews
+                    </a>
+                </p>
+                <div class="collapse" id="collapseReviews">
+                    @foreach (var review in Model.Reviews.Reviews)
+                    {
+                        <partial name="_MovieReviewCard" model="@review" />
+                    }
+                </div>
+
+                <p>
+                    <a class="btn btn-outline-light btn-block text-left" data-toggle="collapse"
+                       href="#collapseCast" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Cast
+                    </a>
+                </p>
+
+                <div class="collapse" id="collapseCast">
+                    <div class="row">
+                        <div class="overflow-auto" style="height:455px; width:750px;">
+                            <div class="card-group">
+                                @foreach (var cast in Model.MovieCast.Cast)
+                                {
+                                    <div class="col-lg-3 col-sm-12 col-md-12">
+                                        <partial name="_CastCard" model="@cast" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-auto col-md-auto">
+        <div class="row">
+            <div class="overflow-auto" style="height:885px;">
+                <div class="card text-white bg-dark mb-3">
+                    <p class="display-4 card-header font-weight-lighter bg-dark sticky-top text-center text-info">Suggested</p>
+                    @foreach (var movie in Model.Recommendations.Result)
+                    {
+                        <div class="col-lg-12 col-sm-auto col-md-auto">
+                            <div class="card m-1">
+                                <a asp-action="MovieDetails" asp-controller="Home" asp-route-id="@movie.ID">
+                                    <img class="card-img-bottom" src="@movie.PosterPath" alt="@movie.MovieTitle">
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
+
+<style>
+    .owl-nav {
+        text-align: center;
+    }
+</style>
+
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 1000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            }
+        }
+    })
+</script>

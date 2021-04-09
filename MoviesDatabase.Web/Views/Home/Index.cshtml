@@ -1,0 +1,105 @@
+﻿@model MoviesHomeViewModel
+
+<link rel="stylesheet" href="~/css/CardHoverAnimation.css" />
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<br />
+<br />
+<br />
+
+<div class="text-center">
+    <h1 class="display-4 text-info">Lumin Movies</h1>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-info">
+            <a asp-action="GetMoviesByOption" asp-controller="Home"
+               asp-route-optionId="UPCOMING" asp-route-optionName="UPCOMING"
+               asp-route-page="1">Upcoming</a>
+        </h3>
+        <div class="owl-carousel">
+            <partial name="_HomePageMoviesList" model="Model.Upcoming" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-info">
+            <a asp-action="GetMoviesByOption" asp-controller="Home"
+               asp-route-optionId="NOW_PLAYING" asp-route-optionName="NOW PLAYING"
+               asp-route-page="1">Now playing</a>
+        </h3>
+        <div class="owl-carousel">
+            <partial name="_HomePageMoviesList" model="Model.NowPlaying" />
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-info">
+            <a asp-action="GetMoviesByOption" asp-controller="Home"
+               asp-route-optionId="TOP_RATED" asp-route-optionName="TOP RATED"
+               asp-route-page="1">TOP RATED</a>
+        </h3>
+        <div class="owl-carousel">
+            <partial name="_HomePageMoviesList" model="Model.TopRated" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-info">
+            <a asp-action="GetMoviesByOption" asp-controller="Home"
+               asp-route-optionId="POPULAR" asp-route-optionName="POPULAR"
+               asp-route-page="1">Popular</a>
+        </h3>
+        <div class="owl-carousel">
+            <partial name="_HomePageMoviesList" model="Model.Popular" />
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
+
+
+<style>
+    .owl-nav {
+        text-align: center;
+    }
+</style>
+
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            }
+        }
+    })
+</script>
