@@ -7,6 +7,13 @@
     
 ## Link to preview the website  https://luminmovies.azurewebsites.net/
 
+## Techologies used  
+    -.NET CORE
+    -C#
+    -JavaScript
+## Packages  
+    -Newtonsoft.Json
+    
 ## Samples
 ![Home](https://user-images.githubusercontent.com/53438581/114245218-68dd9c80-9966-11eb-91cf-39d8ece034b5.png)
 
