@@ -1,6 +1,6 @@
 # LuminMovies
 
-## Web app used to broswe various movies across different genres and options
+## Web app used to browse various movies across different genres and options
 
 ## 1 Register at https://www.themoviedb.org/documentation/api in roder to get an API key  
     you need to add the key in the appsettings.Json file to make it possible to get the data.
