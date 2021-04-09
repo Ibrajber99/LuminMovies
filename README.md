@@ -3,10 +3,11 @@
 ## Web app used to broswe various movies across different genres and options
 
 ## 1 Register at https://www.themoviedb.org/documentation/api in roder to get an API key  
-    you need to add the key in the appsettings.Json file to make it possible to retreive the data.
+    you need to add the key in the appsettings.Json file to make it possible to get the data.
     
+## Link to preview the website 
 
-## Samples
+## Samples https://luminmovies.azurewebsites.net/Movie/278
 
 ![Home](https://user-images.githubusercontent.com/53438581/114245218-68dd9c80-9966-11eb-91cf-39d8ece034b5.png)
 
