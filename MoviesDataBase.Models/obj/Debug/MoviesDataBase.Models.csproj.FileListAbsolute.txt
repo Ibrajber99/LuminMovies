@@ -1,0 +1,9 @@
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\bin\Debug\MoviesDataBase.Models.dll
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\bin\Debug\MoviesDataBase.Models.pdb
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\bin\Debug\Newtonsoft.Json.xml
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\obj\Debug\MoviesDataBase.Models.csprojAssemblyReference.cache
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\obj\Debug\MoviesDataBase.Models.csproj.CoreCompileInputs.cache
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\obj\Debug\MoviesDataBase.Models.csproj.CopyComplete
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\obj\Debug\MoviesDataBase.Models.dll
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDataBase\MoviesDataBase.Models\obj\Debug\MoviesDataBase.Models.pdb

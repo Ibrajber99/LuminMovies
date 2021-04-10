@@ -1,0 +1,18 @@
+﻿@model MoviesByGenreViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="text-center">
+    <a asp-action="GetMoviesGenre"
+       asp-route-genreID="@Model.GenreId"
+       asp-route-genreName="@Model.GenreName"
+       asp-route-page="@Model.PrevIndex"
+       class="btn btn-info btn-lg @Model.PrevPageDisabled">Prev</a>
+
+    <a asp-action="GetMoviesGenre"
+       asp-route-genreID="@Model.GenreId"
+       asp-route-genreName="@Model.GenreName"
+       asp-route-page="@Model.NextIndex"
+       class="btn btn-info btn-lg @Model.NextPageDisabled">Next</a>
+</div>
