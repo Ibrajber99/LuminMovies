@@ -2,6 +2,11 @@
 
 ## Web app used to browse various movies across different genres and options
 
+## how to run  
+    Go to MoviesDatabase.Web project -> dependencies -> projects -> delete the projects in there
+    Right click on the solution folder and add the project reference for .Models and .CLientAPI.
+    Clean and build --> enjoy :) 
+
 ## 1 Register at https://www.themoviedb.org/documentation/api in order to get an API key  
     you need to add the key in the appsettings.Json file to make it possible to get the data.
     
