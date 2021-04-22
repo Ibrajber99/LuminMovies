@@ -16,7 +16,6 @@ namespace MoviesDatabase.Web.Utils
 
         private string YOUTUBE_PATH;
 
-        private const string IMAGE_EXTENSION = ".svg";
 
         public Utilities(IConfiguration Configuration)
         {

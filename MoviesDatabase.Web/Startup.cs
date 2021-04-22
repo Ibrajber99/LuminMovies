@@ -1,16 +1,14 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MovieDataBase.ClientAPI;
 using MoviesDatabase.Web.Models;
 using MoviesDatabase.Web.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MoviesDatabase.Web.Utils.CookieManager;
 
 namespace MoviesDatabase.Web
 {
@@ -26,13 +24,36 @@ namespace MoviesDatabase.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var mediaType = Configuration.GetSection("MediaTypeJSON").Value;
             var baseAddress = Configuration.GetSection("BaseAddress").Value;
-            var pathAddress = Configuration.GetSection("PathAddress").Value;
+            var moviePathAddress = Configuration.GetSection("MoviePathAddress").Value;
             var apiKey = Configuration.GetSection("APIkey").Value;
+            var autheticationPathAddress = Configuration.GetSection("AuthPathAddress").Value;
+            var authenticationRedirectPath = Configuration.GetSection("TokenRedirectPath").Value;
+            var authenticationReleaseRedirectPath = Configuration.GetSection("TokenReleaseRedirectPath").Value;
+            var accountPathAddress = Configuration.GetSection("AccountPathAddress").Value;
 
+            
 
             services.AddScoped<IMovieClient>(m => new MovieClient
-            (baseAddress, pathAddress, apiKey));
+            (baseAddress, moviePathAddress, apiKey, mediaType));
+
+            
+            services.AddScoped<IAuthenticationClient>(m => new AuthenticationClient
+            (baseAddress, autheticationPathAddress,
+            apiKey, authenticationRedirectPath, mediaType));
+
+
+            services.AddScoped<IProfileClient>(m => new ProfileClient
+            (baseAddress, accountPathAddress, apiKey, mediaType));
+
+
+            services.AddSingleton<IHttpContextAccessor,
+            HttpContextAccessor>();
+
+
+            services.AddScoped<ICookiesManager, CookiesManager>();
+
 
             services.AddScoped(u => new Utilities(Configuration));
 
@@ -41,7 +62,11 @@ namespace MoviesDatabase.Web
             services.AddScoped<MoviesByGenreViewModel>();
             services.AddScoped<MoviesByOptionsViewModel>();
             services.AddScoped<MovieDetailsViewModel>();
+            services.AddScoped<ErrorViewModel>();
 
+
+
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
         }
 
@@ -55,7 +80,6 @@ namespace MoviesDatabase.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -81,9 +105,6 @@ namespace MoviesDatabase.Web
                     name: "moviesByOption",
                     pattern: "Movie/{id}",
                     defaults: new { controller = "Home", action = "MovieDetails" });
-
-
-
 
                 endpoints.MapControllerRoute(
                     name: "default",

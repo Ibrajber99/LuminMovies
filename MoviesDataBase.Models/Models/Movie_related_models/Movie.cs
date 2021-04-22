@@ -41,5 +41,8 @@ namespace MoviesDataBase.Models.Models.Movie_related_models
 
         [JsonProperty("backdrop_path")]
         public string backDropPath { get; set; }// Image maybe ? dont know yet
+
+        [JsonProperty("rating")]
+        public string Rating { get; set; }
     }
 }

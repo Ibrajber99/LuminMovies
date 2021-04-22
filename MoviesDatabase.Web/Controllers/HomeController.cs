@@ -2,6 +2,7 @@
 using MovieDataBase.ClientAPI;
 using MoviesDatabase.Web.Models;
 using MoviesDatabase.Web.Utils;
+using MoviesDatabase.Web.Utils.CookieManager;
 using System;
 using System.Threading.Tasks;
 
@@ -9,30 +10,46 @@ namespace MoviesDatabase.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private const string ERROR_PAGE_PATH = "Error";
+        private const string SESSION_VAL = "SESSIONID";
+
         private readonly IMovieClient _client;
+        private readonly ICookiesManager _cookiesManager;
+        private readonly IProfileClient _profileClient;
+
         private readonly Utilities _utils;
         private readonly MoviesHomeViewModel _homeModel;
         private readonly MovieSearchViewModel _searchModel;
         private readonly MoviesByGenreViewModel _movieGenereModel;
         private readonly MoviesByOptionsViewModel _moviesByOptionModel;
         private readonly MovieDetailsViewModel _movieDetailsModel;
+        private readonly ErrorViewModel _errorVM;
 
         public HomeController(
             IMovieClient client,
+            ICookiesManager cookiesManager,
+            IProfileClient profileClient,
             Utilities utils,
             MoviesHomeViewModel homeModel,
             MovieSearchViewModel searchModel,
             MoviesByGenreViewModel movieGenereModel,
             MoviesByOptionsViewModel moviesByOptionModel,
-            MovieDetailsViewModel movieDetailsModel)
+            MovieDetailsViewModel movieDetailsModel,
+            ErrorViewModel errorVM)
         {
             _client = client;
+            _cookiesManager = cookiesManager;
+            _profileClient = profileClient;
             _homeModel = homeModel;
             _searchModel = searchModel;
             _movieGenereModel = movieGenereModel;
             _moviesByOptionModel =  moviesByOptionModel;
             _movieDetailsModel = movieDetailsModel;
             _utils = utils;
+            _errorVM = errorVM;
+
+            var sessionId = _cookiesManager.GetCookie(SESSION_VAL);
+            _profileClient.SetSession(sessionId.Value);
         }
 
 
@@ -63,7 +80,9 @@ namespace MoviesDatabase.Web.Controllers
             }
             catch (Exception ex)
             {
-                return View(_homeModel);
+                _errorVM.RequestId = ex.Message;
+
+                return View(ERROR_PAGE_PATH, _errorVM);
             }
 
         }
@@ -72,22 +91,25 @@ namespace MoviesDatabase.Web.Controllers
         {
             try
             {
-                 if (string.IsNullOrEmpty(searchQuery))
-                     return RedirectToAction(nameof(Index));
-                
-                 var searchResult = await _client.GetMovieSearch(searchQuery,page);
 
-                _utils.SetMoviesImageUrl(searchResult.Result);
-
-                _searchModel.MovieResponse = searchResult;
-                _searchModel.Query = searchQuery;
-
-
-                return View(_searchModel);
+               if (string.IsNullOrEmpty(searchQuery))
+                    return RedirectToAction(nameof(Index));
+               
+                var searchResult = await _client.GetMovieSearch(searchQuery,page);
+               
+               _utils.SetMoviesImageUrl(searchResult.Result);
+               
+               _searchModel.MovieResponse = searchResult;
+               _searchModel.Query = searchQuery;
+               
+               
+               return View(_searchModel);
             }
             catch (Exception ex)
             {
-                return View(_searchModel);
+                _errorVM.RequestId = ex.Message;
+
+                return View(ERROR_PAGE_PATH, _errorVM);
             }
         }
 
@@ -105,9 +127,11 @@ namespace MoviesDatabase.Web.Controllers
 
                 return View(_movieGenereModel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(_movieGenereModel);
+                _errorVM.RequestId = ex.Message;
+
+                return View(ERROR_PAGE_PATH, _errorVM);
             }
         }
 
@@ -155,9 +179,11 @@ namespace MoviesDatabase.Web.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(_moviesByOptionModel);
+                _errorVM.RequestId = ex.Message;
+
+                return View(ERROR_PAGE_PATH, _errorVM);
             }
         }
 
@@ -185,15 +211,26 @@ namespace MoviesDatabase.Web.Controllers
                 _utils.SetMoviesImageUrl(_movieDetailsModel.Recommendations.Result);
                 _utils.SetMovieVideosUrl(_movieDetailsModel.Videos.Results);
                 _utils.SetCastsImageUrl(_movieDetailsModel.MovieCast.Cast);
-                
+
+                if (!_profileClient.IsSessionEmpty())
+                {
+                    var profileRatedTask = await _profileClient.GetRated();
+
+                    var ratedMovie = profileRatedTask.Result.Find(i => i.ID == id);
+                    if(ratedMovie != null)
+                    {
+                        _movieDetailsModel.Result.Movie.Rating
+                            = ratedMovie.Rating;
+                    }
+                }
 
                 return View(_movieDetailsModel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(_movieDetailsModel);
+                _errorVM.RequestId = ex.Message;
+                return View(ERROR_PAGE_PATH, _errorVM);
             }
         }
-
     }
 }

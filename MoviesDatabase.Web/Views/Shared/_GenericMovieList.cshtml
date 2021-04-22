@@ -1,19 +1,18 @@
 ﻿@model MoviesResponseModel
+    @*
+        For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+    *@
 
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
 
-
-<div class="row">
-    @foreach (var movie in Model.Result)
-    {
-        <div class="col-lg-3 col-sm-auto col-md-auto" >
-            <div class="card m-3">
-                <a asp-action="MovieDetails" asp-controller="Home" asp-route-id="@movie.ID">
-                    <img class="card-img-bottom" src="@movie.PosterPath" alt="@movie.MovieTitle">
-                </a>
+    <div class="row">
+        @foreach (var movie in Model.Result)
+        {
+            <div class="col-lg-2 col-sm-auto col-md-auto">
+                <div class="card m-3">
+                    <a asp-action="MovieDetails" asp-controller="Home" asp-route-id="@movie.ID">
+                        <img class="card-img-bottom" src="@movie.PosterPath" alt="@movie.MovieTitle">
+                    </a>
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>

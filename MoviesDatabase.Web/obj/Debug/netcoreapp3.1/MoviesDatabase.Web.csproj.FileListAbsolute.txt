@@ -123,3 +123,4 @@ C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesData
 C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CastCard.cshtml.g.cs
 C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_MovieGenrePagination.cshtml.g.cs
 C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_MovieOptionsPagination.cshtml.g.cs
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Debug\netcoreapp3.1\Razor\Views\Profile\Index.cshtml.g.cs

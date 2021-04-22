@@ -15,15 +15,16 @@ namespace MovieDataBase.ClientAPI
 {
     public class MovieClient : HttpClient, IMovieClient
     {
-        private string basePath;
-        private const string MEDIA_TYPE = "application/json";
-        private string APIKey;
+        private readonly string basePath;
+        private readonly string MEDIA_TYPE;
+        private readonly string APIKey;
 
-        public MovieClient(string baseAddress, string basePath,string APIKey)
+        public MovieClient(string baseAddress, string basePath,string APIKey,string mediaType)
         {
             BaseAddress = new Uri(baseAddress);
             this.basePath = basePath;
             this.APIKey = APIKey;
+            MEDIA_TYPE = mediaType;
         }
 
         public async Task<MoviesResponseModel> GetNowPlaying(int page = 1)

@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Authentication_related_models\ReqTokenResponseModel.cs" />
+    <Compile Include="Models\Authentication_related_models\SessionResponseModel.cs" />
     <Compile Include="Models\Formatted_Models\FullMovieResponseModel.cs" />
     <Compile Include="Models\Formatted_Models\MovieCastResponseModel.cs" />
     <Compile Include="Models\Formatted_Models\MovieGenresResponseModel.cs" />
@@ -58,6 +60,9 @@
     <Compile Include="Models\Movie_related_models\Genre.cs" />
     <Compile Include="Models\Movie_related_models\MovieVideo.cs" />
     <Compile Include="Models\Movie_related_models\SimpleMovie.cs" />
+    <Compile Include="Models\Profile_related_models\AddToFavoriteRequest.cs" />
+    <Compile Include="Models\Profile_related_models\AddToWatchListRequest.cs" />
+    <Compile Include="Models\Profile_related_models\ProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

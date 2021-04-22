@@ -44,9 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticationClient.cs" />
+    <Compile Include="IAuthenticationClient.cs" />
     <Compile Include="IBaseClient.cs" />
     <Compile Include="IMovieClient.cs" />
+    <Compile Include="IProfileClient.cs" />
     <Compile Include="MovieClient.cs" />
+    <Compile Include="ProfileClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

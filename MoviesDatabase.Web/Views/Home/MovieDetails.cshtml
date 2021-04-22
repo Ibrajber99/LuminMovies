@@ -2,10 +2,13 @@
 
 
 <link href="https://cdn.boomcdn.com/libs/owl-carousel/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" type="text/css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 <br />
 <br />
 <div class="row m-5">
+
+    <input type="hidden" value="@Model.Result.Movie.ID" id="movieId" />
+    <input type="hidden" value="@Model.Result.Movie.Rating" id="ratingVal" />
     <div class="col-lg-3 col-sm-12 col-md-12">
         <div class="card text-white bg-dark mb-3">
             <div class="row m-2">
@@ -17,7 +20,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-12 col-md-12">
-                    <p class="card-text">
+                    <p class="card-text" id="voteValue">
                         <i class="fas fa-star"></i>
                         @Model.Result.Movie.VoteAverage / 10
                     </p>
@@ -45,6 +48,15 @@
                 <p class="text-info">Revenue: @Model.Result.Movie.Revenue</p>
                 <p class="text-info">Budget: @Model.Result.Movie.Budget</p>
             </div>
+
+            <a class="btn btn-outline-warning" role="button" id="AddToWatchListBtn">
+                Add to Watch List
+            </a>
+            <a class="btn btn-outline-info" role="button" id="AddToFavoritesBtn">
+                Add to Favorites
+            </a>
+
+            <div id="rateYo" class="m-3"></div>
         </div>
     </div>
     <div class="col-lg-6 col-sm-auto col-md-auto">
@@ -128,10 +140,54 @@
 </div>
 
 
+<button type="button" id="AlertSucccesModal" class="btn btn-primary" data-toggle="modal" data-target="#AddMovieSuccess" hidden>
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="AddMovieSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalMessage">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="AlertFailModal" class="btn btn-primary" data-toggle="modal" data-target="#AddMovieFail" hidden>
+    Launch demo modal
+</button>
+
+<div class="modal fade" id="AddMovieFail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Couldn't process request. Try logging in<br />
+                <a asp-action="Index" asp-controller="Profile">
+                    Login
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
         integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
 <style>
     .owl-nav {
@@ -159,4 +215,100 @@
             }
         }
     })
+
+    const movieIdVal = $("#movieId").val();
+    const modalSuccessBtn = $("#AlertSucccesModal");
+    const modalFailBtn = $("#AlertFailModal");
+    const modalMessage = $("#modalMessage");
+
+    const checkRatingIsValid = $("#ratingVal").attr("value");
+    let ratingValue = 0;
+
+    if (typeof checkRatingIsValid !== 'undefined'
+        && checkRatingIsValid !== false) {
+        ratingValue =  $("#ratingVal").val();
+    }
+
+    $("#AddToWatchListBtn").on("click", function () {
+       $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddMovieToWatchList","Profile")",
+            data: { movieId: movieIdVal},
+            dataType: "text",
+           success: function () {
+               appendModalMessage("movie has been successfully added to watch list")
+                modalSuccessBtn.click();
+            },
+           error: function (req, status, error) {
+               modalFailBtn.click();
+            }
+       });
+    })
+
+
+    $("#AddToFavoritesBtn").on("click", function () {
+       $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddMovieToFavorites", "Profile")",
+            data: { movieId: movieIdVal},
+            dataType: "text",
+            success: function () {
+                appendModalMessage("movie has been successfully added to favorites")
+                modalSuccessBtn.click();
+            },
+            error: function (req, status, error) {
+                modalFailBtn.click();
+            }
+       });
+    })
+
+
+    $("#rateYo").rateYo({
+        numStars: 10,
+        maxValue: 10,
+        halfStar: true,
+        rating: ratingValue,
+        multiColor: {
+            "startColor": "#FF0000",
+            "endColor": "#00FF00"
+        }
+    });
+
+    var $rateYo = $("#rateYo").rateYo();
+
+    $("#rateYo").on("click", function () {
+        let ratingResult = $rateYo.rateYo("rating")
+
+        PostRating(movieIdVal,ratingResult)
+    });
+
+
+    function PostRating(movieId, rating) {
+         $.ajax({
+            type: "POST",
+            url: "@Url.Action("AddMovieRating", "Profile")",
+             data: { movieId: movieId, rating: rating},
+            dataType: "text",
+             success: function () {
+                 appendModalMessage("rating saved!")
+                modalSuccessBtn.click();
+            },
+            error: function (req, status, error) {
+                modalFailBtn.click();
+            }
+       });
+    }
+
+
+    function appendModalMessage(message) {
+        modalMessage.empty()
+
+        var elm = document.createElement('p')
+        elm.innerHTML = message
+        elm.className = "text-info"
+
+        modalMessage.append(elm)
+    }
+
 </script>
+

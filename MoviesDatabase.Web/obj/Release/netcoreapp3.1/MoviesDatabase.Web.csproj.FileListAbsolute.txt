@@ -123,3 +123,4 @@ C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesData
 C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Release\netcoreapp3.1\MoviesDatabase.Web.dll
 C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Release\netcoreapp3.1\MoviesDatabase.Web.pdb
 C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Release\netcoreapp3.1\MoviesDatabase.Web.genruntimeconfig.cache
+C:\Users\jber5\OneDrive\Desktop\standAlonePorjects\MoviesDatabase.Web\MoviesDatabase.Web\obj\Release\netcoreapp3.1\Razor\Views\Profile\Index.cshtml.g.cs

@@ -1,0 +1,90 @@
+﻿@model ProfileViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="~/css/CardHoverAnimation.css" />
+
+<div style="margin-top:10em;">
+    <div class="row mb-3">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-text"> User name: @Model.Profile.UserName</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <p class="display-4 card-header font-weight-lighter bg-dark sticky-top text-center text-info">Watch List</p>
+        <div class="owl-carousel">
+            <partial name="_HomePageMoviesList" model="Model.WatchList" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <p class="display-4 card-header font-weight-lighter bg-success sticky-top text-center text-light">Favorites</p>
+        <div class="owl-carousel">
+            <partial name="_HomePageMoviesList" model="Model.Favorites" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <p class="display-4 card-header font-weight-lighter bg-dark sticky-top text-center text-info">Rated</p>
+        <div class="owl-carousel">
+            @foreach (var movie in Model.Rated.Result)
+            {
+                <div class="card">
+                    <a asp-action="MovieDetails" asp-controller="Home" asp-route-id="@movie.ID">
+                        <img class="card-img-bottom" src="@movie.PosterPath" alt="@movie.MovieTitle">
+                    </a>
+                    <div class="card-footer">
+                        <h4 class="card-text text-info">@movie.Rating</h4>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha256-pTxD+DSzIwmwhOqTFN+DB+nHjO4iAsbgfyFq5K5bcE0=" crossorigin="anonymous"></script>
+
+
+<style>
+    .owl-nav {
+        text-align: center;
+    }
+</style>
+
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 15,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: {
+                items: 2
+            },
+            600: {
+                items: 4
+            },
+            1000: {
+                items: 6
+            }
+        }
+    })
+</script>
